@@ -27,7 +27,7 @@
 </details>
 
 <p id="about">
-This system is built with the laravel framework and MySQL database using a template from the LTE admin. which is the result of the development of the previous system, namely the Mail Management System which can be accessed at https://github.com/qkohst/surat_management
+This system is built with the laravel framework and MySQL database using a template from the LTE admin. which is the result of the development of the previous system, namely the Mail Management System which can be accessed at https://github.com/ankuro-wg/siakoe.git
 </p>
 
 <h4 id="features">
