@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-# School Administration Information System
+# Cooperative Administration Information System
 
 <!-- TABLE OF CONTENTS -->
 <details>
