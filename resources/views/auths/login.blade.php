@@ -8,7 +8,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/adminLTE/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Sistem Informasi Administrasi Sekolah</title>
+    <title>Sistem Informasi Administrasi Koperasi Lentera</title>
     <style>
         body {
             margin: 0;
@@ -117,13 +117,13 @@
             </button>
         </div>
         @endif
-        <img src="/seo.svg" alt="Logo" class="logo">
+        <img src="/logo.png" alt="Logo" class="logo">
         <br>
-        <h3 class="font-weight-bold text-center">Sistem Informasi</h3>
-        <h3 class="font-weight-bold text-center">Administrasi Sekolah</h3>
-        <!-- <h6 class="font-weight text-center">Versi 1.1.0</h6> -->
+        <h3 class="font-weight-bold text-center">Sistem Informasi Administrasi</h3>
+        <h3 class="font-weight-bold text-center">Koperasi Lentera</h3>
+        <!-- <h6 class="font-weight text-center">Versi 1.1.2</h6> -->
 
-        <form action="postlogin" method="POST">
+        <form action="/postlogin" method="POST">
             @csrf
             <input type="email" name="email" class="form_login" placeholder="email" required email oninvalid="this.setCustomValidity('Pastikan anda sudah mengisikan email dengan benar !')" oninput="setCustomValidity('')">
             <input id="password" type="password" name="password" class="form_login" placeholder="password" required oninvalid="this.setCustomValidity('Harap masukkan password !')" oninput="setCustomValidity('')">

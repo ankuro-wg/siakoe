@@ -55,7 +55,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                <a class="nav-link font-weight-bold">SISTEM INFORMASI ADMINISTRASI SEKOLAH</a>
+                <a class="nav-link font-weight-bold">SISTEM INFORMASI ADMINISTRASI KOPERASI LENTERA</a>
                 </li>
             </ul>
 
@@ -90,14 +90,14 @@
             <!-- Brand Logo -->
             @if (auth()->user()->role == 'admin' || auth()->user()->role == 'PetugasAdministrasiSurat' || auth()->user()->role == 'PetugasAdministrasiKeuangan')
             <a href="/dashboard" class="brand-link bg-secondary">
-                <img src="/seo.svg" alt="Logo" class="brand-image" style="opacity: .8">
+                <img src="/logo.png" alt="Logo" class="brand-image" style="opacity: .8">
                 <span class="brand-text font-weight-white">Beranda</span>
             </a>
             @endif
 
             @if (auth()->user()->role == 'Siswa')
             <a href="/{{$id_pesdik_login->id}}/siswadashboard" class="brand-link bg-secondary">
-                <img src="/seo.svg" alt="Logo" class="brand-image" style="opacity: .8">
+                <img src="/logo.png" alt="Logo" class="brand-image" style="opacity: .8">
                 <span class="brand-text font-weight-white">Beranda</span>
             </a>
             @endif

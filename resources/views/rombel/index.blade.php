@@ -58,7 +58,7 @@
                                 <th>No.</th>
                                 <th>Tahun Pelajaran</th>
                                 <th>Semester</th>
-                                <th>Kelas</th>
+                                <th>Tingkat Kelas</th>
                                 <th>Nama Rombel</th>
                                 <th>Wali Kelas</th>
                                 <th>Jumlah Anggota</th>
@@ -115,12 +115,19 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                    <label for="kelas">Kelas</label>
+                                    <label for="kelas">Tingkat Kelas</label>
                                     <select name="kelas" class="form-control my-1 mr-sm-2 bg-light" id="kelas" required oninvalid="this.setCustomValidity('Isian ini tidak boleh kosong !')" oninput="setCustomValidity('')">
-                                        <option value="">-- Pilih Kelas --</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
+                                        <option value="">-- Pilih Tingkat Kelas --</option>
+                                        <option value="TPA">TPA</option>
+                                        <option value="KB">KB</option>
+                                        <option value="TK A">TK A</option>
+                                        <option value="TK B">TK B</option>
+                                        <option value="SD Kelas 1">SD Kelas 1</option>
+                                        <option value="SD Kelas 2">SD Kelas 2</option>
+                                        <option value="SD Kelas 3">SD Kelas 3</option>
+                                        <option value="SD Kelas 4">SD Kelas 4</option>
+                                        <option value="SD Kelas 5">SD Kelas 5</option>
+                                        <option value="SD Kelas 6">SD Kelas 6</option>
                                     </select>
                                     <label for="nama_rombel">Nama Rombel</label>
                                     <input value="{{old('nama_rombel')}}" name="nama_rombel" type="text" class="form-control bg-light" id="nama_rombel" placeholder="Nama Rombel" required oninvalid="this.setCustomValidity('Isian ini tidak boleh kosong !')" oninput="setCustomValidity('')">

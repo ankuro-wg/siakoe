@@ -111,8 +111,8 @@
                       <?php $no++; ?>
                       <tr>
                         <td>{{$no}}</td>
-                        <td>{{$setor->pesdik->nama}}</td>
-                        <td>{{$setor->rombel->nama_rombel}} {{$setor->rombel->tapel->semester}} {{$setor->pesdik->rombel->tapel->tahun}}</td>
+                        <td>{{$setor->nama}}</td>
+                        <td>{{$setor->nama_rombel}} {{$setor->semester}} {{$setor->tahun}}</td>
                         <td>{{$setor->tanggal}}</td>
                         <td>@currency($setor->jumlah),00</td>
                       </tr>

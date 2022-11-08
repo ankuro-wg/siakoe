@@ -42,11 +42,18 @@
             {{csrf_field()}}
             <div class="row">
                 <div class="col-md-6">
-                    <label for="kelas">Kelas</label>
+                    <label for="kelas">Tingkat Kelas</label>
                     <select name="kelas" id="kelas" class="form-control bg-light" required oninvalid="this.setCustomValidity('Isian ini tidak boleh kosong !')" oninput="setCustomValidity('')">
-                        <option value="7" @if ($rombel->kelas == '7') selected @endif>7</option>
-                        <option value="8" @if ($rombel->kelas == '8') selected @endif>8</option>
-                        <option value="9" @if ($rombel->kelas == '9') selected @endif>9</option>
+                        <option value="TPA" @if ($rombel->kelas == 'TPA') selected @endif>TPA</option>
+                        <option value="KB" @if ($rombel->kelas == 'KB') selected @endif>KB</option>
+                        <option value="TK A" @if ($rombel->kelas == 'TK A') selected @endif>TK A</option>
+                        <option value="TK B" @if ($rombel->kelas == 'TK B') selected @endif>TK B</option>
+                        <option value="SD Kelas 1" @if ($rombel->kelas == 'SD Kelas 1') selected @endif>SD Kelas 1</option>
+                        <option value="SD Kelas 2" @if ($rombel->kelas == 'SD Kelas 2') selected @endif>SD Kelas 2</option>
+                        <option value="SD Kelas 3" @if ($rombel->kelas == 'SD Kelas 3') selected @endif>SD Kelas 3</option>
+                        <option value="SD Kelas 4" @if ($rombel->kelas == 'SD Kelas 4') selected @endif>SD Kelas 4</option>
+                        <option value="SD Kelas 5" @if ($rombel->kelas == 'SD Kelas 5') selected @endif>SD Kelas 5</option>
+                        <option value="SD Kelas 6" @if ($rombel->kelas == 'SD Kelas 6') selected @endif>SD Kelas 6</option>
                     </select>
                     <label for="nama_rombel">Nama Rombel</label>
                     <input name="nama_rombel" type="text" class="form-control bg-light" id="nama_rombel" placeholder="Nama Rombel" value="{{$rombel->nama_rombel}}" required oninvalid="this.setCustomValidity('Isian ini tidak boleh kosong !')" oninput="setCustomValidity('')">

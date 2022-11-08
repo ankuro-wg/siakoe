@@ -74,6 +74,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
     Route::get('/keuangan/pengeluaran/{id}/deletekategori', 'PengeluaranController@deletekategori');
     Route::get('/tabungan/setor/{id}/delete', 'SetorController@delete');
     Route::get('/tabungan/tarik/{id}/delete', 'TarikController@delete');
+    Route::get('/tabunganguru/setor/{id}/delete', 'SetoranController@delete');
+    Route::get('/tabunganguru/tarik/{id}/delete', 'PenarikanController@delete');
     Route::get('/pembayaran/tagihan/{id}/delete', 'TagihanController@delete');
 
     //Route untuk instansi dan pengguna contoller
@@ -98,6 +100,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,PetugasAdministrasiKeuan
     Route::post('/pembayaran/transaksipembayaran/bayar', 'TransaksiPembayaranController@bayar');
     Route::post('/pembayaran/transaksipembayaran/cetak_invoice', 'TransaksiPembayaranController@cetak_invoice');
 
+    //Tabungan Siswa
     Route::get('/tabungan/setor/index', 'SetorController@index');
     Route::post('/tabungan/setor/tambah', 'SetorController@tambah');
     Route::get('/tabungan/setor/{id}/edit', 'SetorController@edit');
@@ -105,13 +108,27 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,PetugasAdministrasiKeuan
     Route::get('/tabungan/setor/{id}/cetak', 'SetorController@cetak');
     Route::get('/tabungan/setor/{id}/cetakprint', 'SetorController@cetakprint');
 
-
     Route::get('/tabungan/tarik/index', 'TarikController@index');
     Route::post('/tabungan/tarik/tambah', 'TarikController@tambah');
     Route::get('/tabungan/tarik/{id}/edit', 'TarikController@edit');
     Route::post('/tabungan/tarik/{id}/update', 'TarikController@update');
     Route::get('/tabungan/tarik/{id}/cetak', 'TarikController@cetak');
     Route::get('/tabungan/tarik/{id}/cetakprint', 'TarikController@cetakprint');
+
+    //Tabungan Guru
+    Route::get('/tabunganguru/setor/index', 'SetoranController@index');
+    Route::post('/tabunganguru/setor/tambah', 'SetoranController@tambah');
+    Route::get('/tabunganguru/setor/{id}/edit', 'SetoranController@edit');
+    Route::post('/tabunganguru/setor/{id}/update', 'SetoranController@update');
+    Route::get('/tabunganguru/setor/{id}/cetak', 'SetoranController@cetak');
+    Route::get('/tabunganguru/setor/{id}/cetakprint', 'SetoranController@cetakprint');
+
+    Route::get('/tabunganguru/tarik/index', 'PenarikanController@index');
+    Route::post('/tabunganguru/tarik/tambah', 'PenarikanController@tambah');
+    Route::get('/tabunganguru/tarik/{id}/edit', 'PenarikanController@edit');
+    Route::post('/tabunganguru/tarik/{id}/update', 'PenarikanController@update');
+    Route::get('/tabunganguru/tarik/{id}/cetak', 'PenarikanController@cetak');
+    Route::get('/tabunganguru/tarik/{id}/cetakprint', 'PenarikanController@cetakprint');
 
     Route::get('/keuangan/pemasukan/index', 'PemasukanController@index');
     Route::post('/keuangan/pemasukan/tambah', 'PemasukanController@tambah');
@@ -146,7 +163,10 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,PetugasAdministrasiKeuan
     Route::post('/laporankeuangan/setortariktunai/filterByKelas', 'LaporanController@tSetorTarikfilterByKelas')->name('laporankeuangan.setortariktunai.filterByKelas');
     Route::post('/laporankeuangan/setortariktunai/filterByTanggal', 'LaporanController@tSetorTarikfilterByTanggal')->name('laporankeuangan.setortariktunai.filterByTanggal');
     Route::get('/laporankeuangan/setortariktunai/DownloadExcel', 'LaporanController@tSetorTarikDownloadExcel')->name('laporankeuangan.setortariktunai.DownloadExcel');
+    Route::get('/laporankeuangan/setortariktunai/DownloadExcelHB', 'LaporanController@tSetorTarikDownloadExcelHB')->name('laporankeuangan.setortariktunai.DownloadExcelHB');
     Route::post('/laporankeuangan/setortariktunai/cetak', 'LaporanController@tSetorTarikCetak');
+
+    Route::post('/laporankeuangan/setortariktunai/filterByTanggalSekarang', 'LaporanController@tSetorTarikfilterByTanggalSekarang')->name('laporankeuangan.setortariktunai.filterByTanggalSekarang');
 
     Route::get('/laporankeuangan/keuangansekolah/index', 'LaporanController@tKeuanganSekolahIndex')->name('laporankeuangan.keuangansekolah.index');
     Route::post('/laporankeuangan/keuangansekolah/filterByKategori', 'LaporanController@tKeuanganSekolahfilterByKategori')->name('laporankeuangan.keuangansekolah.filterByKategori');
@@ -215,6 +235,14 @@ Route::group(['middleware' => ['auth', 'checkRole:Siswa']], function () {
     Route::get('/pembayaran/transaksipembayaran/{id}/siswaindex', 'TransaksiPembayaranController@siswaindex');
 });
 
+//Route untuk user guru
+Route::group(['middleware' => ['auth', 'checkRole:Guru']], function () {
+    Route::get('/{id}/gurudashboard', 'DashboardController@gurudashboard');
+    Route::get('/tabunganguru/setor/{id}/guruindex', 'SetoranController@guruindex');
+    Route::get('/tabunganguru/tarik/{id}/guruindex', 'PenarikanController@guruindex');
+    Route::get('/pembayaran/transaksipembayaran/{id}/guruindex', 'TransaksiPembayaranController@guruindex');
+});
+
 //Route untuk user Admin, Petugas Administrasi Surat dan Petugas Administrasi Keuangan
 Route::group(['middleware' => ['auth', 'checkRole:admin,PetugasAdministrasiKeuangan,PetugasAdministrasiSurat']], function () {
     Route::get('/', function () {
@@ -232,3 +260,13 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,PetugasAdministrasiKeuan
     Route::get('/auths/{id}/gantipassword', 'AuthController@gantipassword');
     Route::post('/auths/{id}/simpanpassword', 'AuthController@simpanpassword');
 });
+
+//Route untuk Import dan Export File Excel
+Route::get('importexportView', 'LaporanController@importexportView');
+Route::get('export', 'LaporanController@export')->name('export');
+Route::post('import', 'LaporanController@import')->name('import');
+
+//Route untuk Import dan Export Data Pesdik
+Route::get('importexportViewPesdik', 'LaporanController@importexportViewPesdik');
+Route::get('exportPesdik', 'LaporanController@exportPesdik')->name('exportPesdik');
+Route::post('importPesdik', 'LaporanController@importPesdik')->name('importPesdik');

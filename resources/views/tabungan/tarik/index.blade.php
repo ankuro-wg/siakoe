@@ -52,7 +52,7 @@
                                         <select name="pesdik_id" id="pesdik_id" class="form-control select2bs4" required>
                                             <option value="">-- Pilih Peserta Didik --</option>
                                             @foreach($data_pesdik as $pesdik)
-                                            <option value="{{$pesdik->pesdik_id}}">{{$pesdik->pesdik->nisn}} {{$pesdik->pesdik->nama}}</option>
+                                            <option value="{{$pesdik->pesdik_id}}">{{$pesdik->pesdik->nisn}} {{$pesdik->pesdik->nama}} {{$pesdik->rombel->nama_rombel}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,8 +100,8 @@
                                                         <thead>
                                                             <tr class="bg-light">
                                                                 <th>No.</th>
-                                                                <th>No. Trans</th>
                                                                 <th>Nama Pesdik</th>
+                                                                <th>Kelas</th>
                                                                 <th>Tanggal</th>
                                                                 <th>Jumlah</th>
                                                                 <th>Keterangan</th>
@@ -115,8 +115,9 @@
                                                             <?php $no++; ?>
                                                             <tr>
                                                                 <td>{{$no}}</td>
-                                                                <td>TT0{{$tarik->id}}</td>
+                                                                <!-- <td>TT0{{$tarik->id}}</td> -->
                                                                 <td>{{$tarik->pesdik->nama}}</td>
+                                                                <td>{{$tarik->rombel->nama_rombel}}</td>
                                                                 <td>{{$tarik->tanggal}}</td>
                                                                 <td>@currency($tarik->jumlah),00</td>
                                                                 <td>{{$tarik->keterangan}}</td>

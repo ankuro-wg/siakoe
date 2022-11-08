@@ -16,12 +16,16 @@
     <div class="row">
       <div class="flex-fill col-md-3" style="padding: 4px 4px 4px 4px">
         <div class="info-box md-3">
-          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-envelope"></i></span>
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-donate"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Surat Masuk</span>
+            <span class="info-box-text"><b class="text-info">Setoran</b> Bulan Ini</span>
             <span class="info-box-number">
-              {{DB::table('suratmasuk')->count()}}
+              <?php
+                $bln_ini = \Carbon\Carbon::now()->month;
+                $total_setor = \App\Setor::select('*')->fromSub(\App\Setor::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'setor.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'setor.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $bln_ini)->unionAll(\App\Setoran::select('*')->fromSub(\App\Setoran::select('setoran.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'setoran.guru_id')->join('users', 'users.id', 'setoran.users_id')->join('rombel', 'rombel.guru_id', 'setoran.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $bln_ini))->sum('jumlah');
+              ?>
+              @currency($total_setor),00
             </span>
           </div>
           <!-- /.info-box-content -->
@@ -31,11 +35,17 @@
       <!-- /.col -->
       <div class=" flex-fill col-md-3" style="padding: 4px 4px 4px 4px">
         <div class="info-box md-3">
-          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-envelope-open"></i></span>
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-exchange-alt"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Surat Keluar</span>
-            <span class="info-box-number">{{DB::table('suratkeluar')->count()}}</span>
+            <span class="info-box-text"><b class="text-danger">Penarikan</b> Bulan Ini</span>
+            <span class="info-box-number">
+            <?php
+                $bln_ini = \Carbon\Carbon::now()->month;
+                $total_tarik = \App\Tarik::select('*')->fromSub(\App\Tarik::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'tarik.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'tarik.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $bln_ini)->unionAll(\App\Penarikan::select('*')->fromSub(\App\Penarikan::select('penarikan.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'penarikan.guru_id')->join('users', 'users.id', 'penarikan.users_id')->join('rombel', 'rombel.guru_id', 'penarikan.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $bln_ini))->sum('jumlah');
+              ?>
+              @currency($total_tarik),00
+            </span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -46,11 +56,13 @@
       <!-- fix for small devices only -->
       <div class="flex-fill col-md-3" style="padding: 4px 4px 4px 4px">
         <div class="info-box md-3">
-          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-layer-group"></i></span>
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Klasifikasi</span>
-            <span class="info-box-number">{{DB::table('klasifikasi')->count()}}</span>
+            <span class="info-box-text"><b class="text-success">Saldo</b> Bulan Ini</span>
+            <span class="info-box-number">
+              @currency($total_setor-$total_tarik),00
+            </span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -59,10 +71,17 @@
       <!-- /.col -->
       <div class=" flex-fill" style="padding: 4px 4px 4px 4px">
         <div class="info-box md-3">
-          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-user"></i></span>
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-coins"></i></span>
           <div class="info-box-content">
-            <span class="info-box-text">Pengguna</span>
-            <span class="info-box-number">{{DB::table('users')->count()}}</span>
+            <span class="info-box-text"><b class="text-warning">Transaksi</b> Bulan Ini</span>
+            <span class="info-box-number">
+              <?php
+                $bln_ini = \Carbon\Carbon::now()->month;
+                $total_setor = \App\Setor::select('*')->fromSub(\App\Setor::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'setor.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'setor.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $bln_ini)->unionAll(\App\Setoran::select('*')->fromSub(\App\Setoran::select('setoran.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'setoran.guru_id')->join('users', 'users.id', 'setoran.users_id')->join('rombel', 'rombel.guru_id', 'setoran.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $bln_ini))->count('jumlah');
+                $total_tarik = \App\Tarik::select('*')->fromSub(\App\Tarik::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'tarik.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'tarik.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $bln_ini)->unionAll(\App\Penarikan::select('*')->fromSub(\App\Penarikan::select('penarikan.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'penarikan.guru_id')->join('users', 'users.id', 'penarikan.users_id')->join('rombel', 'rombel.guru_id', 'penarikan.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $bln_ini))->count('jumlah');
+              ?>
+              {{$total_setor+$total_tarik}}
+            </span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -79,64 +98,83 @@
       <div class="box">
         <div class="row">
           <div class="col">
-            <h4><i class="nav-icon fas fa-warehouse my-0 btn-sm-1"></i> Rekap Data Sekolah</h4>
+            <h4><i class="nav-icon fas fa-warehouse my-0 btn-sm-1"></i> Rekap Data Transaksi <b>Hari Ini</b> </h4>
             <hr>
           </div>
         </div>
         <div class="card-body">
           <!-- Small boxes (Stat box) -->
           <div class="filter-container p-0 row d-flex justify-content-center">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{DB::table('guru')->count()}}</h3>
-                  <p>Guru</p>
+                  <?php
+                    $hr_ini = \Carbon\Carbon::now()->day;
+                    $total_setor_hr = \App\Setor::select('*')->fromSub(\App\Setor::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'setor.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'setor.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereDay('tanggal', $hr_ini)->unionAll(\App\Setoran::select('*')->fromSub(\App\Setoran::select('setoran.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'setoran.guru_id')->join('users', 'users.id', 'setoran.users_id')->join('rombel', 'rombel.guru_id', 'setoran.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereDay('tanggal', $hr_ini))->sum('jumlah');
+                  ?>
+                  <h3>@currency($total_setor_hr),00</h3>
+                  <p><b>Setoran</b> Hari Ini</p>
                 </div>
                 <div class="icon">
-                  <i class="nav-icon fas fa-graduation-cap"></i>
+                  <i class="nav-icon fas fa-donate"></i>
                 </div>
-                <p class="small-box-footer">Jumlah Guru</p>
+                <form id="form" action="/laporankeuangan/setortariktunai/filterByTanggalSekarang" method="POST">@csrf</form>
+                <a href="javascript:void(0)" onclick="document.getElementById('form').submit()" class="small-box-footer">Info Lebih Lanjut <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                <div class="inner">
-                  <h3>{{DB::table('tendik')->count()}}</h3>
-                  <p>Tendik</p>
-                </div>
-                <div class="icon">
-                  <i class="nav-icon fas fa-graduation-cap"></i>
-                </div>
-                <p class="small-box-footer">Jumlah Tendik</p>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-md-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3>{{DB::table('pesdik')->where('status',"Aktif")->count()}}</h3>
-                  <p>Peserta Didik</p>
-                </div>
-                <div class="icon">
-                  <i class="nav-icon fas fa-child nav-icon"></i>
-                </div>
-                <p class="small-box-footer">Jumlah Peserta Didik</p>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-6 col-md-6">
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>{{DB::table('rombel')->where('tapel_id', DB::table('rombel')->MAX('tapel_id'))->count()}}</h3>
-                  <p>Rombel</p>
+                  <?php
+                    $hr_ini = \Carbon\Carbon::now()->day;
+                    $total_tarik_hr = \App\Tarik::select('*')->fromSub(\App\Tarik::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'tarik.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'tarik.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $hr_ini)->unionAll(\App\Penarikan::select('*')->fromSub(\App\Penarikan::select('penarikan.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'penarikan.guru_id')->join('users', 'users.id', 'penarikan.users_id')->join('rombel', 'rombel.guru_id', 'penarikan.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $hr_ini))->sum('jumlah');
+                  ?>
+                  <h3>@currency($total_tarik_hr),00</h3>
+                  <p><b>Penarikan</b> Hari ini</p>
                 </div>
                 <div class="icon">
-                  <i class="nav-icon fas fa-users"></i>
+                  <i class="nav-icon fas fa-exchange-alt"></i>
                 </div>
-                <p class="small-box-footer">Jumlah Rombel</p>
+                <form id="form" action="/laporankeuangan/setortariktunai/filterByTanggalSekarang" method="POST">@csrf</form>
+                <a href="javascript:void(0)" onclick="document.getElementById('form').submit()" class="small-box-footer">Info Lebih Lanjut <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-6 col-md-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <!-- <h3>{{DB::table('pesdik')->where('status',"Aktif")->count()}}</h3> -->
+                  <h3>@currency($total_setor_hr-$total_tarik_hr),00</h3>
+                  <p><b>Saldo</b> Hari Ini</p>
+                </div>
+                <div class="icon">
+                  <i class="nav-icon fas fa-wallet nav-icon"></i>
+                </div>
+                <form id="form" action="/laporankeuangan/setortariktunai/filterByTanggalSekarang" method="POST">@csrf</form>
+                <a href="javascript:void(0)" onclick="document.getElementById('form').submit()" class="small-box-footer">Info Lebih Lanjut <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <?php
+                    $hr_ini = \Carbon\Carbon::now()->day;
+                    $total_trans_setor = \App\Setor::select('*')->fromSub(\App\Setor::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'setor.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'setor.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $hr_ini)->unionAll(\App\Setoran::select('*')->fromSub(\App\Setoran::select('setoran.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'setoran.guru_id')->join('users', 'users.id', 'setoran.users_id')->join('rombel', 'rombel.guru_id', 'setoran.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $hr_ini))->count('jumlah');
+                    $total_trans_tarik = \App\Tarik::select('*')->fromSub(\App\Tarik::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'tarik.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'tarik.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $hr_ini)->unionAll(\App\Penarikan::select('*')->fromSub(\App\Penarikan::select('penarikan.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'penarikan.guru_id')->join('users', 'users.id', 'penarikan.users_id')->join('rombel', 'rombel.guru_id', 'penarikan.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $hr_ini))->count('jumlah');
+                  ?>
+                  <!-- <h3>{{DB::table('rombel')->where('tapel_id', DB::table('rombel')->MAX('tapel_id'))->count()}}</h3> -->
+                  <h3>{{ $total_trans_setor+$total_trans_tarik }}</h3>
+                  <p><b>Transaksi</b> Hari Ini</p>
+                </div>
+                <div class="icon">
+                  <i class="nav-icon fas fa-coins"></i>
+                </div>
+                <form id="form" action="/laporankeuangan/setortariktunai/filterByTanggalSekarang" method="POST">@csrf</form>
+                <a href="javascript:void(0)" onclick="document.getElementById('form').submit()" class="small-box-footer">Info Lebih Lanjut <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
           </div>
@@ -149,157 +187,44 @@
       <div class="box">
         <div class="row">
           <div class="col">
-            <h4><i class="nav-icon fas fa-dollar-sign my-0 btn-sm-1"></i> Keuangan Sekolah</h4>
+            <h4><i class="nav-icon fas fa-dollar-sign my-0 btn-sm-1"></i> Tabungan Sekolah</h4>
             <hr>
           </div>
         </div>
         <div class="card-body p-0">
           <?php
-          $jumlah_pengeluaran = DB::table('pengeluaran')
-            ->sum('pengeluaran.jumlah');
-          $jumlah_pemasukan = DB::table('pemasukan')
-            ->sum('pemasukan.jumlah');
+          $jumlah_pengeluaran = DB::table('tarik')
+            ->sum('tarik.jumlah');
+          $jumlah_pemasukan = DB::table('setor')
+            ->sum('setor.jumlah');
+          $jumlah_transaksi_setoran = DB::table('tarik')
+            ->count('tarik.jumlah');
+          $jumlah_transaksi_penarikan = DB::table('setor')
+            ->count('setor.jumlah');
           ?>
           <ul class="products-list product-list-in-card pl-1 pr-1">
-            <a href="javascript:void(0)" class="product-title">Jumlah Pemasukan</a>
+            <a href="javascript:void(0)" class="product-title">Jumlah Setoran</a>
             <h5>@currency($jumlah_pemasukan),00</h5>
-            <hr>
+            <hr/>
           </ul>
           <ul class="products-list product-list-in-card pl-1 pr-1">
-            <a href="javascript:void(0)" class="product-title">Jumlah Pengeluaran</a>
+            <a href="javascript:void(0)" class="product-title">Jumlah Penarikan</a>
             <h5> @currency($jumlah_pengeluaran),00</h5>
-            <hr>
+            <hr/>
+          </ul>
+          <ul class="products-list product-list-in-card pl-1 pr-1">
+            <a href="javascript:void(0)" class="product-title">Jumlah Transaksi</a>
+            <h5>{{ $jumlah_transaksi_setoran+$jumlah_transaksi_penarikan }}</h5>
+            <hr/>
           </ul>
           <ul class="products-list product-list-in-card pl-1 pr-1">
             <a href="javascript:void(0)" class="product-title">Saldo</a>
             <h5>@currency($jumlah_pemasukan-$jumlah_pengeluaran),00</h5>
-            <hr />
+            <hr/>
           </ul>
         </div>
       </div>
     </section>
   </div>
   @endif
-  <div class="col-md-6">
-    <section class="content card" style="padding: 10px 10px 10px 10px ">
-      <div class="box">
-        <div class="row">
-          <div class="col">
-            <h4><i class="nav-icon fas fa-bullhorn my-0 btn-sm-1"></i> Pengumuman</h4>
-            <hr>
-          </div>
-        </div>
-        <div class="tab-pane" id="timeline">
-          <!-- The timeline -->
-          <div class="timeline timeline-inverse">
-            <!-- timeline time label -->
-            <div class="time-label">
-              <span class="bg-success">
-                Pengumuman Terakhir
-              </span>
-            </div>
-            @foreach($data_pengumuman as $pengumuman)
-            <!-- /.timeline-label -->
-            <!-- timeline item -->
-            <div>
-              <i class="fas fa-envelope bg-primary"></i>
-
-              <div class="timeline-item">
-                <span class="time"><i class="far fa-calendar-alt"></i> {{$pengumuman->created_at}} <br> {{$pengumuman->created_at->diffForHumans()}} </span>
-                <h3 class="timeline-header"><a class="text-primary">{{$pengumuman->judul}}</a><br>{{$pengumuman->users->role}} </h3>
-                <div class="timeline-body">
-                  {!!$pengumuman->isi!!}
-                </div>
-              </div>
-            </div>
-            <!-- END timeline item -->
-            @endforeach
-            <div>
-              <i class="far fa-clock bg-gray"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div class="col-md-3">
-    <section class="content card" style="padding: 10px 10px 10px 10px ">
-      <div class="box">
-        <div class="row">
-          <div class="col">
-            <h4><i class="nav-icon fas fa-headset my-0 btn-sm-1"></i> Team Teknis</h4>
-            <hr>
-          </div>
-        </div>
-        <div class="card-body p-0">
-          <ul class="products-list product-list-in-card pl-2 pr-2">
-            @foreach($data_admin as $admin)
-            <li class="item">
-              <div class="product-img">
-                <img src="/adminLTE/img/support.png" alt="Product Image" class="img-size-50">
-              </div>
-              <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">{{$admin->name}}
-                  <span class="badge badge-warning float-right">Administrator</span></a>
-                <span class="product-description">
-                  Email : {{$admin->email}}
-                </span>
-              </div>
-            </li>
-            @endforeach
-            @foreach($data_petugas as $petugas)
-            <li class="item">
-              <div class="product-img">
-                <img src="/adminLTE/img/support.png" alt="Product Image" class="img-size-50">
-              </div>
-              <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">{{$petugas->nama}}
-                  <span class="badge badge-warning float-right">{{$petugas->tugas}}</span></a>
-                <span class="product-description">
-                  Email : {{$petugas->email}}
-                </span>
-                <span class="product-description text-info">
-                  HP : {{$petugas->no_hp}}
-                </span>
-              </div>
-            </li>
-            @endforeach
-            <!-- /.item -->
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div class="col-md-3">
-    <section class="content card" style="padding: 10px 10px 10px 10px ">
-      <div class="box">
-        <div class="row">
-          <div class="col">
-            <h4><i class="nav-icon fas fa-user-tag my-0 btn-sm-1"></i> Riwayat Login</h4>
-            <hr>
-          </div>
-        </div>
-        <div class="card-body p-0">
-          <ul class="products-list product-list-in-card pl-2 pr-2">
-            @foreach($data_login as $user_login)
-            <li class="item">
-              <div class="product-img">
-                <img src="/adminLTE/img/user.png" alt="Product Image" class="img-size-50">
-              </div>
-              <div class="product-info">
-                <a href="javascript:void(0)" class="product-title">{{$user_login->name}}
-                  <span class="badge float-right"><i class="far fa-clock"></i> {{$user_login->created_at->diffForHumans()}}</span></a>
-
-                <span class="product-description">
-                  {{$user_login->email}}
-                </span>
-              </div>
-            </li>
-            @endforeach
-            <!-- /.item -->
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
   @endsection

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
+use App\export;
+use App\import;
+use Maatwebsite\Excel\Facedes\Excel;
+
 class GuruController extends Controller
 {
     /**
@@ -63,7 +67,7 @@ class GuruController extends Controller
     {
         $request->validate([
             'nama' => 'min:5',
-            'tempat_lahir' => 'min:5',
+            'tempat_lahir' => 'min:1',
             'alamat' => 'min:10',
             'no_hp' => 'min:12|max:13',
             'email' => 'email',

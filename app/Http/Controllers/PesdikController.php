@@ -38,7 +38,7 @@ class PesdikController extends Controller
         $request->validate([
             'nama' => 'min:5',
             'nisn' => 'unique:pesdik|size:10',
-            'induk' => 'unique:pesdik|min:2|max:6',
+            'induk' => 'unique:pesdik|min:2|max:20',
         ]);
         //Menambah data ke tabel pesdik
         $pesdik = new Pesdik();
@@ -149,7 +149,7 @@ class PesdikController extends Controller
         $request->validate([
             'nama' => 'min:5',
             'nisn' => 'size:10',
-            'induk' => 'min:2|max:6',
+            'induk' => 'min:2|max:20',
         ]);
         $pesdik = \App\Pesdik::find($id_pesdik);
         $pesdik->update($request->all());

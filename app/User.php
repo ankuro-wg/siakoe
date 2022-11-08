@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Setor');
     }
 
+    public function setoran()
+    {
+        return $this->hasMany('App\Setoran');
+    }
+
     public function suratmasuk()
     {
         return $this->hasMany('App\Suratmasuk');

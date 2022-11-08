@@ -44,7 +44,8 @@
         <div>
             <div class="col">
                 <a class="btn btn-primary btn-sm my-1 mr-sm-1" href="create" role="button"><i class="fas fa-plus"></i> Tambah Data</a>
-                <br>
+                
+                <button type="button" class="btn btn-primary btn-sm my-1 mr-sm-1" data-toggle="modal" data-target="#tambahPesdikMass"><i class="fas fa-plus"></i> Tambah Data Massal</button>
             </div>
         </div>
         <div class="row">
@@ -95,6 +96,28 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <!-- Modal Tambah Data Massal -->
+            <div class="modal fade bd-example-modal-lg" id="tambahPesdikMass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"><i class="nav-icon fas fa-graduation-cap my-1 btn-sm-1"></i> Tambah Data Excel Pesdik</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('importPesdik') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file" class="form-control">
+                                <br>
+                                <button class="btn btn-success">Import Data Pesdik</button>
+                                <a class="btn btn-warning" href="{{ route('exportPesdik') }}">Export</a>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

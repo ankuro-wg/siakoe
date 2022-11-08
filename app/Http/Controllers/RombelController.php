@@ -30,7 +30,7 @@ class RombelController extends Controller
     public function tambah(Request $request)
     {
         $request->validate([
-            'nama_rombel' => 'min:3|max:15',
+            'nama_rombel' => 'min:1|max:15',
         ]);
         $rombel = new Rombel();
         $rombel->tapel_id   = $request->input('tapel_id');
@@ -97,7 +97,7 @@ class RombelController extends Controller
     public function update(Request $request, $id_rombel)
     {
         $request->validate([
-            'nama_rombel' => 'min:3|max:15',
+            'nama_rombel' => 'min:1|max:15',
         ]);
         $rombel = \App\Rombel::find($id_rombel);
         $rombel->update($request->all());

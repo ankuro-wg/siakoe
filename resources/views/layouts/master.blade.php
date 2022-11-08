@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Sistem Informasi Administrasi Sekolah</title>
+    <title>Sistem Informasi Administrasi Koperasi Lentera</title>
     <style type="text/css">
         .preloader {
             position: fixed;
@@ -94,7 +94,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                <a class="nav-link font-weight-bold">SISTEM INFORMASI ADMINISTRASI SEKOLAH</a>
+                <a class="nav-link font-weight-bold">SISTEM INFORMASI ADMINISTRASI KOPERASI LENTERA</a>
                 </li>
             </ul>
 
@@ -129,143 +129,29 @@
             <!-- Brand Logo -->
             @if (auth()->user()->role == 'admin' || auth()->user()->role == 'PetugasAdministrasiSurat' || auth()->user()->role == 'PetugasAdministrasiKeuangan')
             <a href="/dashboard" class="brand-link bg-secondary">
-                <img src="/seo.svg" alt="Logo" class="brand-image" style="opacity: .8">
+                <img src="/logo.png" alt="Logo" class="brand-image" style="opacity: .8">
                 <span class="brand-text font-weight-white">Beranda</span>
             </a>
             @endif
 
             @if (auth()->user()->role == 'Siswa')
             <a href="/{{$id_pesdik_login->id}}/siswadashboard" class="brand-link bg-secondary">
-                <img src="/seo.svg" alt="Logo" class="brand-image" style="opacity: .8">
+                <img src="/logo.png" alt="Logo" class="brand-image" style="opacity: .8">
                 <span class="brand-text font-weight-white">Beranda</span>
             </a>
             @endif
             <!-- Sidebar -->
             <div class="sidebar">
-                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'PetugasAdministrasiSurat')
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Sidebar Menu -->
-                    <a>
-                        <span class="text-white">MANAJEMEN SURAT</span>
-                    </a>
-                    <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-mail-bulk"></i>
-                            <p>
-                                Transaksi Surat
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview bg-secondary">
-                            <li class="nav-item">
-                                <a href="/suratmasuk/index" class="nav-link text-white">
-                                    <i class="far fa-envelope nav-icon"></i>
-                                    <p>Surat Masuk</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/suratkeluar/index" class="nav-link text-white">
-                                    <i class="far fa-envelope-open nav-icon"></i>
-                                    <p>Surat Keluar</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-book"></i>
-                            <p>
-                                Buku Agenda
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview bg-secondary">
-                            <li class="nav-item">
-                                <a href="/suratmasuk/agenda" class="nav-link text-white">
-                                    <i class="far fa-envelope nav-icon"></i>
-                                    <p>Agenda Surat Masuk</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/suratkeluar/agenda" class="nav-link text-white">
-                                    <i class="far fa-envelope-open nav-icon"></i>
-                                    <p>Agenda Surat Keluar</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-images"></i>
-                            <p>
-                                Galeri File
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview bg-secondary">
-                            <li class="nav-item">
-                                <a href="/suratmasuk/galeri" class="nav-link text-white">
-                                    <i class="fas fa-sign-in-alt nav-icon"></i>
-                                    <p>File Surat Masuk</p>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="/suratkeluar/galeri" class="nav-link text-white">
-                                    <i class="fas fa-sign-out-alt nav-icon"></i>
-                                    <p>File Surat Keluar</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/klasifikasi/index" class="nav-link">
-                            <i class="nav-icon fas fa-layer-group"></i>
-                            <p>
-                                Klasifikasi
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-                @endif
-
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'PetugasAdministrasiKeuangan')
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Sidebar Menu -->
                     <a class="text-white">
                         <p>
-                            MANAJEMEN KEUANGAN
+                            TABUNGAN
                         </p>
                     </a>
                     <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-hand-holding-usd"></i>
-                            <p>
-                                Pembayaran
-                                <i class="right fas fa-angle-left"></i>
-
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview bg-secondary">
-                            <li class="nav-item">
-                                <a href="/pembayaran/tagihan/index" class="nav-link  text-white">
-                                    <i class="fas fa-money-check-alt nav-icon"></i>
-                                    <p>Rincian Tagihan</p>
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/pembayaran/transaksipembayaran/index" class="nav-link  text-white">
-                                    <i class="far fa-handshake nav-icon"></i>
-                                    <p>Transaksi Pembayaran</p>
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-credit-card"></i>
@@ -294,25 +180,25 @@
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-dollar-sign"></i>
+                            <i class="nav-icon fas fa-money-check"></i>
                             <p>
-                                Keuangan Sekolah
+                                Tabungan Guru
                                 <i class="fas fa-angle-left right"></i>
 
                             </p>
                         </a>
                         <ul class="nav nav-treeview bg-secondary">
                             <li class="nav-item">
-                                <a href="/keuangan/pemasukan/index" class="nav-link text-white">
-                                    <i class="fas fa-money-bill-alt nav-icon"></i>
-                                    <p>Pemasukan</p>
+                                <a href="/tabunganguru/setor/index" class="nav-link text-white">
+                                    <i class="fas fa-money-check nav-icon"></i>
+                                    <p>Setor Tunai</p>
 
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/keuangan/pengeluaran/index" class="nav-link text-white">
-                                    <i class="fas fa-money-bill nav-icon"></i>
-                                    <p>Pengeluaran</p>
+                                <a href="/tabunganguru/tarik/index" class="nav-link text-white">
+                                    <i class="fas fa-money-check nav-icon"></i>
+                                    <p>Tarik Tunai</p>
 
                                 </a>
                             </li>
@@ -329,23 +215,9 @@
                         </a>
                         <ul class="nav nav-treeview bg-secondary">
                             <li class="nav-item">
-                                <a href="/laporankeuangan/transaksipembayaran/index" class="nav-link text-white">
-                                    <i class="far fa-handshake nav-icon"></i>
-                                    <p>Transaksi Pembayaran</p>
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="/laporankeuangan/setortariktunai/index" class="nav-link text-white">
-                                    <i class="nav-icon fas fa-credit-card"></i>
+                                    <i class="nav-icon fas fa-wallet"></i>
                                     <p>Setor & Tarik Tunai</p>
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="/laporankeuangan/keuangansekolah/index" class="nav-link text-white">
-                                    <i class="nav-icon fas fa-dollar-sign"></i>
-                                    <p>Keuangan Sekolah</p>
 
                                 </a>
                             </li>
@@ -529,10 +401,10 @@
 
         <footer class="main-footer bg-secondary">
             <div class="float-right d-none d-sm-block">
-                <b>Teknik Informatika Unirow Tuban | </b>
-                Versi 1.0.0
+                <b>Yayasan Sosial Dakwah Pendidikan Lentera | </b>
+                Versi 1.1.2
             </div>
-            Copyright &copy; 2020 | by : Qkoh St
+            Copyright &copy; 2022 | by : YSDP Lentera
         </footer>
 
 
@@ -575,6 +447,22 @@
     </script>
     <!-- page script -->
     <script>
+        // Untuk Menampilkan Menu Aktif
+        var url = window.location;
+
+        $('ul.nav-sidebar a').filter(function() {
+            if (this.href) {
+                return this.href == url || url.href.indexOf(this.href) == 0;
+            }
+        }).removeClass('text-white').addClass('active');
+
+        $('ul.nav-treeview a').filter(function() {
+            if (this.href) {
+                return this.href == url || url.href.indexOf(this.href) == 0;
+            }
+        }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+
         // Untuk Menampilkan Button kembali
         function viewKembali() {
             var button = document.getElementById("kembali");

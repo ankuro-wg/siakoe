@@ -13,4 +13,9 @@ class Guru extends Model
     {
         return $this->hasMany('App\Rombel');
     }
+
+    public function setoran()
+    {
+        return $this->hasMany('App\Setoran');
+    }
 }

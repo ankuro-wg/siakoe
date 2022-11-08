@@ -46,6 +46,9 @@
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahGuru"><i class="fas fa-plus"></i>
                     Tambah Data
                 </button>
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahGuruMass"><i class="fas fa-plus"></i>
+                    Tambah Data Massal    
+                </button>
             </div>
             <br>
         </div>
@@ -133,6 +136,39 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Tambah Guru Massal dengan Excel -->
+            <div class="modal fade bd-example-modal-lg" id="tambahGuruMass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"><i class="nav-icon fas fa-graduation-cap my-1 btn-sm-1"></i> Tambah Data Excel Guru</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <a href="{{ route('export', ['type'=>'xls'])}}">Download Excel xls</a> |
+                                    <a href="{{ route('export')}}">Download Excel xlsx</a> |
+                                    <a href="{{ route('export', ['type'=>'csv'])}}">Download CSV</a>
+                                </div>
+                            </div>
+
+                            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file" class="form-control">
+                                <br>
+                                <button class="btn btn-success">Import User Data</button>
+                                <a class="btn btn-warning" href="{{ route('export') }}">Export User Data</a>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

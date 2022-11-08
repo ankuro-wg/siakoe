@@ -9,7 +9,7 @@
         @endif
         <div class="row">
             <div class="col">
-                <h4><i class="nav-icon fas fa-credit-card my-1 btn-sm-1"></i> Laporan Setor & Tarik Tunai</h4>
+                <h4><i class="nav-icon fas fa-wallet my-1 btn-sm-1"></i> Laporan Setor & Tarik Tunai</h4>
                 <hr>
             </div>
         </div>
@@ -25,8 +25,8 @@
                                     <label>Berdasarkan Nama Siswa</label>
                                     <select name="filterNama" id="filterNama" class="form-control select2bs4 my-1 mr-sm-1" onchange="this.form.submit();">
                                         <option value="">-- Pilih Nama Siswa --</option>
-                                        @foreach($daftar_nama as $list_nama)
-                                        <option value="{{ $list_nama->pesdik_id }}">{{$list_nama->pesdik->nisn}}/{{$list_nama->pesdik->induk}} - {{$list_nama->pesdik->nama}}</option>
+                                        @foreach($nama_nasabah as $list_nama)
+                                        <option value="{{ $list_nama->nisn }}">{{$list_nama->nisn}} - {{$list_nama->nama}}</option>
                                         @endforeach
                                     </select>
                                 </form>
@@ -37,8 +37,8 @@
                                     <label>Berdasarkan Kelas</label>
                                     <select name="filterKelas" id="filterKelas" class="form-control select2bs4 my-1 mr-sm-1" onchange="this.form.submit();">
                                         <option value="">-- Pilih Kelas --</option>
-                                        @foreach($daftar_kelas as $list_kelas)
-                                        <option value="{{ $list_kelas->rombel_id }}">{{$list_kelas->rombel->nama_rombel}} {{$list_kelas->rombel->tapel->semester}} {{$list_kelas->rombel->tapel->tahun}}</option>
+                                        @foreach($kelas_nasabah as $list_kelas)
+                                        <option value="{{ $list_kelas->nama_rombel }}">{{$list_kelas->nama_rombel}} {{$list_kelas->semester}} {{$list_kelas->tahun}}</option>
                                         @endforeach
                                     </select>
                                 </form>
@@ -70,18 +70,19 @@
                 <form action="/laporankeuangan/setortariktunai/cetak" method="POST" target="_blank">
                     {{csrf_field()}}
                     @foreach($data_id_pesdik as $id_pesdik)
-                    <input name="id_pesdik[]" type="text" class="d-none" id="id_pesdik[]" value="{{$id_pesdik->pesdik_id}}">
+                    <input name="id_pesdik[]" type="text" class="d-none" id="id_pesdik[]" value="{{$id_pesdik->nisn}}">
                     @endforeach
                     @foreach($data_id_rombel as $id_rombel)
-                    <input name="id_rombel[]" type="text" class="d-none" id="id_rombel[]" value="{{$id_rombel->rombel_id}}">
+                    <input name="id_rombel[]" type="text" class="d-none" id="id_rombel[]" value="{{$id_rombel->nama_rombel}}">
                     @endforeach
 
                     <input name="tgl_awal" type="text" class="d-none" id="tgl_awal" value="{{$tgl_awal}}">
                     <input name="tgl_akhir" type="text" class="d-none" id="tgl_akhir" value="{{$tgl_akhir}}">
 
-                    <button type="submit" class="btn btn-primary btn-sm my-2 mr-sm-2 float-right"><i class="fas fa-print"></i> Cetak</button>
+                    <button name="submit" type="submit" class="btn btn-primary btn-sm my-2 mr-sm-2 float-right" value="cetakpdf"><i class="fas fa-print"></i> Cetak Data [PDF]</button>
+                    <button name="submit" type="submit" class="btn btn-primary btn-sm my-2 mr-sm-2 float-right" value="cetakexcel"><i class="fas fa-file-excel"></i> Download Data [EXCEL]</button>
                 </form>
-                <a class="btn btn-primary btn-sm my-2 mr-sm-2 float-right" href="{{route('laporankeuangan.setortariktunai.DownloadExcel')}}" role="button"><i class="fas fa-file-excel"></i> Download Excel</a>
+                <!-- <a class="btn btn-primary btn-sm my-2 mr-sm-2 float-right" href="{{route('laporankeuangan.setortariktunai.DownloadExcel')}}" role="button"><i class="fas fa-file-excel"></i> Download Semua Data</a> -->
                 <a class="btn btn-success btn-sm my-2 mr-sm-2 float-right" href="index" role="button"><i class="fas fa-sync-alt"></i> Refresh</a>
             </div>
         </div>
@@ -116,12 +117,12 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{$no}}</td>
-                                                <td>{{$setor->pesdik->nama}}</td>
-                                                <td>{{$setor->rombel->nama_rombel}} {{$setor->rombel->tapel->semester}} {{$setor->pesdik->rombel->tapel->tahun}}</td>
+                                                <td>{{$setor->nama}}</td>
+                                                <td>{{$setor->nama_rombel}} {{$setor->semester}} {{$setor->tahun}}</td>
                                                 <td>{{$setor->tanggal}}</td>
                                                 <td>@currency($setor->jumlah),00</td>
                                                 <td>{{$setor->keterangan}}</td>
-                                                <td>{{$setor->users->name}}</td>
+                                                <td>{{$setor->name}}</td>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -154,8 +155,8 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{$no}}</td>
-                                                <td>{{$tarik->pesdik->nama}}</td>
-                                                <td>{{$tarik->rombel->nama_rombel}} {{$tarik->rombel->tapel->semester}} {{$tarik->pesdik->rombel->tapel->tahun}}</td>
+                                                <td>{{$tarik->nama}}</td>
+                                                <td>{{$tarik->nama_rombel}} {{$tarik->semester}} {{$tarik->tahun}}</td>
                                                 <td>{{$tarik->tanggal}}</td>
                                                 <td>@currency($tarik->jumlah),00</td>
                                                 <td>{{$tarik->keterangan}}</td>

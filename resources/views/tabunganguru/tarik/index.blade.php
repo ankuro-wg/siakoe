@@ -1,63 +1,63 @@
 @extends('layouts.master')
 
 @section('content')
-@if(session('sukses'))
-<div class="callout callout-success alert alert-success alert-dismissible fade show" role="alert">
-    <h5><i class="fas fa-check"></i> Sukses :</h5>
-    {{session('sukses')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
-
-@if(session('warning'))
-<div class="callout callout-warning alert alert-warning alert-dismissible fade show" role="alert">
-    <h5><i class="fas fa-info"></i> Informasi :</h5>
-    {{session('warning')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
-
-@if ($errors->any())
-<div class="callout callout-danger alert alert-danger alert-dismissible fade show">
-    <h5><i class="fas fa-exclamation-triangle"></i> Peringatan :</h5>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
 <section class="content card" style="padding: 10px 10px 10px 10px ">
     <div class="box">
-        <h4><i class="nav-icon fas fa-credit-card my-1 btn-sm-1"></i> Setor Tunai</h4>
+        <h4><i class="nav-icon fas fa-money-check my-1 btn-sm-1"></i> Tarik Tunai</h4>
         <hr>
         <section class="content">
+            @if(session('sukses'))
+            <div class="callout callout-success alert alert-success alert-dismissible fade show" role="alert">
+                <h5><i class="fas fa-check"></i> Sukses :</h5>
+                {{session('sukses')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
+
+            @if(session('warning'))
+            <div class="callout callout-danger alert alert-danger alert-dismissible fade show" role="alert">
+                <h5><i class="fas fa-exclamation-triangle"></i> Peringatan :</h5>
+                {{session('warning')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
+
+            @if ($errors->any())
+            <div class="callout callout-danger alert alert-danger alert-dismissible fade show">
+                <h5><i class="fas fa-exclamation-triangle"></i> Peringatan :</h5>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="card">
-                            <h6 class="card-header bg-light p-3"><i class="fas fa-credit-card"></i> TAMBAH SETOR TUNAI</h6>
+                            <h6 class="card-header bg-light p-3"><i class="fas fa-money-check"></i> TAMBAH TARIK TUNAI</h6>
                             <div class="card-body">
-                                <form action="/tabungan/setor/tambah" method="POST" enctype="multipart/form-data">
+                                <form action="/tabunganguru/tarik/tambah" method="POST" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                     <div class="form-group row">
-                                        <label for="pesdik_id">Pilih Peserta Didik</label>
-                                        <select name="pesdik_id" id="pesdik_id" class="form-control select2bs4" required>
-                                            <option value="">-- Pilih Peserta Didik --</option>
-                                            @foreach($data_pesdik as $pesdik)
-                                            <option value="{{$pesdik->id}}">{{$pesdik->nisn}} {{$pesdik->nama}} {{$pesdik->rombel->nama_rombel}}</option>
+                                        <label for="guru_id">Pilih Data Guru</label>
+                                        <select name="guru_id" id="guru_id" class="form-control select2bs4" required>
+                                            <option value="">-- Pilih Data Guru --</option>
+                                            @foreach($data_guru as $guru)
+                                            <option value="{{$guru->guru_id}}">{{$guru->guru->nama}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="tanggal">Tanggal Setoran</label>
+                                        <label for="tanggal">Tanggal Penarikan</label>
                                         <input value="{{old('tanggal')}}" name="tanggal" type="date" class="form-control bg-light" id="tanggal" required oninvalid="this.setCustomValidity('Isian ini tidak boleh kosong !')" oninput="setCustomValidity('')">
                                     </div>
                                     <div class="form-group row">
@@ -86,13 +86,13 @@
                         <div class="card">
                             <div class="card-header bg-light p-2">
                                 <ul class="nav nav-pills">
-                                    <li class="nav-item"><a class="nav-link active btn-sm" href="#setor" data-toggle="tab"><i class="fas fa-credit-card"></i> Rekap Data Setor Tunai</a></li>
-                                    <li class="nav-item"><a class="nav-link btn-sm" href="#pesdik" data-toggle="tab"><i class="fas fa-child"></i> Data Peserta Didik</a></li>
+                                    <li class="nav-item"><a class="nav-link active btn-sm" href="#tarik" data-toggle="tab"><i class="fas fa-money-check"></i> Rekap Data Tarik Tunai</a></li>
+                                    <li class="nav-item"><a class="nav-link btn-sm" href="#guru" data-toggle="tab"><i class="fas fa-child"></i> Data Guru</a></li>
                                 </ul>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <div class="active tab-pane" id="setor">
+                                    <div class="active tab-pane" id="tarik">
                                         <div class="row">
                                             <div class="row table-responsive">
                                                 <div class="col-12">
@@ -100,8 +100,7 @@
                                                         <thead>
                                                             <tr class="bg-light">
                                                                 <th>No.</th>
-                                                                <th>Nama Pesdik</th>
-                                                                <th>Kelas</th>
+                                                                <th>Nama Guru</th>
                                                                 <th>Tanggal</th>
                                                                 <th>Jumlah</th>
                                                                 <th>Keterangan</th>
@@ -111,22 +110,21 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php $no = 0; ?>
-                                                            @foreach($data_setor as $setor)
+                                                            @foreach($data_tarik as $tarik)
                                                             <?php $no++; ?>
                                                             <tr>
                                                                 <td>{{$no}}</td>
-                                                                <!-- <td>ST0{{$setor->id}}</td> -->
-                                                                <td>{{$setor->pesdik->nama}}</td>
-                                                                <td>{{$setor->rombel->nama_rombel}}</td>
-                                                                <td>{{$setor->tanggal}}</td>
-                                                                <td>@currency($setor->jumlah),00</td>
-                                                                <td>{{$setor->keterangan}}</td>
-                                                                <td>{{$setor->users->name}}</td>
+                                                                <!-- <td>TT0{{$tarik->id}}</td> -->
+                                                                <td>{{$tarik->guru->nama}}</td>
+                                                                <td>{{$tarik->tanggal}}</td>
+                                                                <td>@currency($tarik->jumlah),00</td>
+                                                                <td>{{$tarik->keterangan}}</td>
+                                                                <td>{{$tarik->users->name}}</td>
                                                                 <td>
-                                                                    <a href="/tabungan/setor/{{$setor->id}}/cetakprint" target="_blank" class="btn btn-primary btn-sm my-1 mr-sm-1"><i class="nav-icon fas fa-print"></i> Cetak</a>
-                                                                    <a href="/tabungan/setor/{{$setor->id}}/edit" class="btn btn-primary btn-sm my-1 mr-sm-1"><i class="nav-icon fas fa-pencil-alt"></i> Edit</a>
+                                                                    <a href="/tabunganguru/tarik/{{$tarik->id}}/cetakprint" target="_blank" class="btn btn-primary btn-sm my-1 mr-sm-1"><i class="nav-icon fas fa-print"></i> Cetak</a>
+                                                                    <a href="/tabunganguru/tarik/{{$tarik->id}}/edit" class="btn btn-primary btn-sm my-1 mr-sm-1"><i class="nav-icon fas fa-pencil-alt"></i> Edit</a>
                                                                     @if (auth()->user()->role == 'admin')
-                                                                    <a href="/tabungan/setor/{{$setor->id}}/delete" class="btn btn-danger btn-sm my-1 mr-sm-1" onclick="return confirm('Hapus Data ?')"><i class="nav-icon fas fa-trash"></i>
+                                                                    <a href="/tabunganguru/tarik/{{$tarik->id}}/delete" class="btn btn-danger btn-sm my-1 mr-sm-1" onclick="return confirm('Hapus Data ?')"><i class="nav-icon fas fa-trash"></i>
                                                                         Hapus</a>
                                                                     @endif
                                                                 </td>
@@ -139,7 +137,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="tab-pane" id="pesdik">
+                                    <div class="tab-pane" id="guru">
                                         <div class="row">
                                             <div class="row table-responsive">
                                                 <div class="col-12">
@@ -147,27 +145,23 @@
                                                         <thead>
                                                             <tr class="bg-light">
                                                                 <th>No.</th>
-                                                                <th>NISN </th>
-                                                                <th>Nama Pesdik</th>
-                                                                <th>Rombel</th>
+                                                                <th>Nama Guru</th>
                                                                 <th>Saldo Tabungan</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php $no = 0; ?>
-                                                            @foreach($data_pesdik as $pesdik)
+                                                            @foreach($data_guru as $guru)
                                                             <?php $no++; ?>
                                                             <tr>
                                                                 <td>{{$no}}</td>
-                                                                <td>{{$pesdik->nisn}}</td>
-                                                                <td>{{$pesdik->nama}}</td>
-                                                                <td>{{$pesdik->rombel->nama_rombel}}</td>
+                                                                <td>{{$guru->guru->nama}}</td>
                                                                 <?php
-                                                                $id = $pesdik->id;
-                                                                $total_setor = DB::table('setor')->where('setor.pesdik_id', '=', $id)
-                                                                    ->sum('setor.jumlah');
-                                                                $total_tarik = DB::table('tarik')->where('tarik.pesdik_id', '=', $id)
-                                                                    ->sum('tarik.jumlah');
+                                                                $id = $guru->guru->id;
+                                                                $total_setor = DB::table('setoran')->where('setoran.guru_id', '=', $id)
+                                                                    ->sum('setoran.jumlah');
+                                                                $total_tarik = DB::table('penarikan')->where('penarikan.guru_id', '=', $id)
+                                                                    ->sum('penarikan.jumlah');
                                                                 ?>
                                                                 <td>@currency($total_setor-$total_tarik),00</td>
                                                             </tr>
