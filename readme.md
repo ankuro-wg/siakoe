@@ -66,7 +66,7 @@ To run the application on your computer, please follow the following command :
    ```
 2. Change directory in project which already clone
    ```sh
-   $ cd manajemen_administrasi_sekolah
+   $ cd siakoe
    ```
 3. Install Composer packages
    ```sh
