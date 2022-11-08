@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="card">
-                            <h6 class="card-header bg-light p-3"><i class="fas fa-credit-card"></i> TAMBAH SETOR TUNAI</h6>
+                            <h6 class="card-header bg-light p-3"><nav class="navbar"><i class="fas fa-credit-card"></i> TAMBAH SETOR TUNAI</nav></h6>
                             <div class="card-body">
                                 <form action="/tabungan/setor/tambah" method="POST" enctype="multipart/form-data">
                                     {{csrf_field()}}
@@ -85,10 +85,18 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header bg-light p-2">
+                                <nav class="navbar">
+
                                 <ul class="nav nav-pills">
                                     <li class="nav-item"><a class="nav-link active btn-sm" href="#setor" data-toggle="tab"><i class="fas fa-credit-card"></i> Rekap Data Setor Tunai</a></li>
                                     <li class="nav-item"><a class="nav-link btn-sm" href="#pesdik" data-toggle="tab"><i class="fas fa-child"></i> Data Peserta Didik</a></li>
                                 </ul>
+                                <form action="/tabungan/setor/filterAll" method="POST">
+                                    {{csrf_field()}}
+                                    <button name="submit" type="submit" class="btn btn-info btn-sm float-right" onclick="this.form.submit();">Semua Data</button>        
+                                </form>
+
+                                </nav>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">

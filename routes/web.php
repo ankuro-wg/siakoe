@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,PetugasAdministrasiKeuan
     //Tabungan Siswa
     Route::get('/tabungan/setor/index', 'SetorController@index');
     Route::post('/tabungan/setor/tambah', 'SetorController@tambah');
+    Route::post('/tabungan/setor/filterAll', 'SetorController@filterAll');
     Route::get('/tabungan/setor/{id}/edit', 'SetorController@edit');
     Route::post('/tabungan/setor/{id}/update', 'SetorController@update');
     Route::get('/tabungan/setor/{id}/cetak', 'SetorController@cetak');

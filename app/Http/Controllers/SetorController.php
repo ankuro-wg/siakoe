@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SetorController extends Controller
 {
     public function index()
     {
-        $data_setor = \App\Setor::orderByRaw('created_at DESC')->get();
+        $tanggal_sekarang = Carbon::now();
+        $data_setor = \App\Setor::where('tanggal', $tanggal_sekarang)->orderByRaw('created_at DESC')->get();
         $data_pesdik = \App\Pesdik::orderByRaw('nama ASC')->get();
         return view('/tabungan/setor/index', compact('data_setor', 'data_pesdik'));
     }
@@ -89,5 +91,12 @@ class SetorController extends Controller
         $data_pesdik = \App\Pesdik::where('id', $id)->get();
         $data_setor = \App\Setor::where('pesdik_id', $id)->orderByRaw('created_at DESC')->get();
         return view('/tabungan/setor/siswaindex', compact('data_pesdik', 'data_setor', 'id_pesdik_login'));
+    }
+
+    public function filterAll(Request $request)
+    {
+        $data_setor = \App\Setor::orderByRaw('created_at DESC')->get();
+        $data_pesdik = \App\Pesdik::orderByRaw('nama ASC')->get();
+        return view('/tabungan/setor/index', compact('data_setor', 'data_pesdik'));
     }
 }
