@@ -14,7 +14,7 @@ class SetorController extends Controller
 {
     public function index()
     {
-        $tanggal_sekarang = Carbon::now();
+        $tanggal_sekarang = Carbon::now()->format('Y-m-d');
         $data_setor = \App\Setor::where('tanggal', $tanggal_sekarang)->orderByRaw('created_at DESC')->get();
         $data_pesdik = \App\Pesdik::orderByRaw('nama ASC')->get();
         return view('/tabungan/setor/index', compact('data_setor', 'data_pesdik'));
