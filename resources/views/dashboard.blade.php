@@ -110,8 +110,8 @@
               <div class="small-box bg-info">
                 <div class="inner">
                   <?php
-                    $hr_ini = \Carbon\Carbon::now()->day;
-                    $total_setor_hr = \App\Setor::select('*')->fromSub(\App\Setor::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'setor.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'setor.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereDay('tanggal', $hr_ini)->unionAll(\App\Setoran::select('*')->fromSub(\App\Setoran::select('setoran.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'setoran.guru_id')->join('users', 'users.id', 'setoran.users_id')->join('rombel', 'rombel.guru_id', 'setoran.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereDay('tanggal', $hr_ini))->sum('jumlah');
+                    $hr_ini = \Carbon\Carbon::now()->format('Y-m-d');
+                    $total_setor_hr = \App\Setor::select('*')->fromSub(\App\Setor::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'setor.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'setor.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereDay('tanggal', $hr_ini)->unionAll(\App\Setoran::select('*')->fromSub(\App\Setoran::select('setoran.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'setoran.guru_id')->join('users', 'users.id', 'setoran.users_id')->join('rombel', 'rombel.guru_id', 'setoran.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->where('tanggal', $hr_ini))->sum('jumlah');
                   ?>
                   <h3>@currency($total_setor_hr),00</h3>
                   <p><b>Setoran</b> Hari Ini</p>
@@ -128,8 +128,8 @@
               <div class="small-box bg-danger">
                 <div class="inner">
                   <?php
-                    $hr_ini = \Carbon\Carbon::now()->day;
-                    $total_tarik_hr = \App\Tarik::select('*')->fromSub(\App\Tarik::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'tarik.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'tarik.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $hr_ini)->unionAll(\App\Penarikan::select('*')->fromSub(\App\Penarikan::select('penarikan.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'penarikan.guru_id')->join('users', 'users.id', 'penarikan.users_id')->join('rombel', 'rombel.guru_id', 'penarikan.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->whereMonth('tanggal', $hr_ini))->sum('jumlah');
+                    $hr_ini = \Carbon\Carbon::now()->format('Y-m-d');
+                    $total_tarik_hr = \App\Tarik::select('*')->fromSub(\App\Tarik::select('pesdik_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'nisn', 'name', 'tahun', 'semester')->join('pesdik', 'pesdik.id', 'tarik.pesdik_id')->join('rombel', 'rombel.id', 'pesdik.rombel_id')->join('users', 'users.id', 'tarik.users_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelpesdik')->whereMonth('tanggal', $hr_ini)->unionAll(\App\Penarikan::select('*')->fromSub(\App\Penarikan::select('penarikan.guru_id', 'users_id', 'nama_rombel', 'tanggal', 'jumlah', 'keterangan', 'nama', 'no_hp', 'name', 'tahun', 'semester')->join('guru', 'guru.id', 'penarikan.guru_id')->join('users', 'users.id', 'penarikan.users_id')->join('rombel', 'rombel.guru_id', 'penarikan.guru_id')->join('tapel', 'tapel.id', 'rombel.tapel_id'), 'tabelguru')->where('tanggal', $hr_ini))->sum('jumlah');
                   ?>
                   <h3>@currency($total_tarik_hr),00</h3>
                   <p><b>Penarikan</b> Hari ini</p>
